@@ -20,6 +20,12 @@ body{
     overflow: hidden;
 }
 
+#head{
+    position: absolute;
+    left: 50px;
+    top:40px
+}
+
 #game-arena{
     height: 500px;
     width: 600px;
@@ -27,7 +33,7 @@ body{
     border: solid 5px #666;
     margin-bottom: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  
+    position: relative;
 
 }
 
@@ -47,4 +53,18 @@ body{
     border-radius: 6px;
     cursor: pointer;
     border: none;
+}
+
+.food{
+    background-color: rgb(225, 10, 10);
+    height: 20px;
+    width: 20px;
+    border: solid 1px white;
+    border-radius: 60%;
+    animation: blink 1s infinite ;
+}
+@keyframes blink {
+    50%{
+        opacity: 0.5;
+    }
 }
