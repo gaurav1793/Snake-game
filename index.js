@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     const cellSize = 20;
     let score =0;
     let gameStarted = false;
-    let food = {x:400 , y:300};
-    let snake = [{x:380,y:200},{x:360,y:200},{x:340,y:200}];
+    let food = {x:400 , y:200};
+    let snake = [{x:280,y:200},{x:260,y:200},{x:240,y:200}];
     let dx=cellSize;
     let dy=0;
-    let snakeColor = ['#008000','#198c19','#329932','#4ca64c','#66b266','#7fbf7f','#99cc99','#b2d8b2' , '#cce5cc','#e5f2e5'];
+    let snakeColor = ['#008000','#198c19','#329932','#4ca64c','#66b266','#4ca64c','#329932','#198c19','#008000' ];
 
     function drawScoreBoard(){
         const scoreBoard=document.getElementById('score-board');
@@ -32,14 +32,39 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         snake.forEach((snakeCell,idx)=>{
             const element  = drawDiv(snakeCell.x,snakeCell.y,'snake');
-            let x =snake.length;
-            element.style.backgroundColor=snakeColor[idx%x];
+            let x =snakeColor.length;
+            let i=idx%x;
+            element.style.backgroundColor=snakeColor[i];
             gameArena.appendChild(element);
         })
     }
 
+    function moveFood(){
+        let newX,newY;
+        do {
+            newX = Math.floor(Math.random()*(((areanSize-cellSize)/cellSize)*cellSize));
+            newY = Math.floor(Math.random()*(((areanSize-cellSize)/cellSize)*cellSize));
+        } while (snake.some(snakeCell=>snakeCell.x===newX && snakeCell.y===newY));
+
+        food={x:newX,y:newY};
+    }
+
+    function updateSnake(){
+        let newHead = {x:snake[0].x+dx , y:snake[0].y+dy};
+        snake.unshift(newHead);
+        if(food.x==newHead.x && food.y==newHead.y){
+            //increase score
+            score+=5;
+            moveFood();
+            //no need to pop tail
+        }else{
+            snake.pop();
+        }
+        
+    }
     function gameLoop(){
         setInterval(() => {
+            updateSnake();
             drawScoreBoard();
             drawFoodAndSnake();
         }, 1000);

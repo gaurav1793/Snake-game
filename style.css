@@ -27,7 +27,7 @@ body{
 }
 
 #game-arena{
-    height: 500px;
+    height: 600px;
     width: 600px;
     background-color: #333;
     border: solid 5px #666;
