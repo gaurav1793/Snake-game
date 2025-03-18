@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let snake = [{x:380,y:200},{x:360,y:200},{x:340,y:200}];
     let dx=cellSize;
     let dy=0;
+    let snakeColor = ['#008000','#198c19','#329932','#4ca64c','#66b266','#7fbf7f','#99cc99','#b2d8b2' , '#cce5cc','#e5f2e5'];
 
     function drawScoreBoard(){
         const scoreBoard=document.getElementById('score-board');
@@ -28,6 +29,13 @@ document.addEventListener('DOMContentLoaded',()=>{
         gameArena.innerHTML='';
         const foodElement = drawDiv(food.x ,food.y,'food');
         gameArena.appendChild(foodElement);
+
+        snake.forEach((snakeCell,idx)=>{
+            const element  = drawDiv(snakeCell.x,snakeCell.y,'snake');
+            let x =snake.length;
+            element.style.backgroundColor=snakeColor[idx%x];
+            gameArena.appendChild(element);
+        })
     }
 
     function gameLoop(){
