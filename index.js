@@ -62,12 +62,45 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
         
     }
+
+    function isGameOver(){
+        //snake hit his body
+        for(i=1; i<snake.length ; i++){
+            if(snake[0].x=== snake[i].x && snake[0].y === snake[i].y){
+                return true;
+            }
+        }
+
+        //snake hit wall
+        const lw =snake[0].x<0;
+        const tw = snake[0].y<0;
+        const rw = snake[0].x>=areanSize;
+        const dw = snake[0].y>=areanSize;
+
+        return lw||tw||rw||dw;
+
+    }
+
     function gameLoop(){
         setInterval(() => {
+            if(!gameStarted)return;
+            if(isGameOver()){
+                gameStarted=false;
+                const restart = document.createElement('button');
+                restart.textContent='Restart';
+                restart.id='restart';
+                restart.className='start-button';
+
+                document.body.insertBefore(restart,gameArena);
+                restart.addEventListener('click',()=>{
+                    window.location.reload();
+                })
+                return;
+            }
             updateSnake();
             drawScoreBoard();
             drawFoodAndSnake();
-        }, 1000);
+        }, 200);
     }
 
     function runGame(){

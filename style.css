@@ -26,6 +26,14 @@ body{
     top:40px
 }
 
+#restart{
+    background-color: green;
+    position: absolute;
+    left: 50px;
+    top:150px 
+}
+
+
 #game-arena{
     height: 600px;
     width: 600px;
