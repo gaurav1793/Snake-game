@@ -83,3 +83,11 @@ body{
     border: solid 1px white;
     border-radius: 40%;
 }
+
+.game-finish{
+   text-align: center;
+   color: bisque;
+   font-size:xx-large;
+   font-weight: bold;
+  
+}

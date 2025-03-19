@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     function moveFood(){
         let newX,newY;
         do {
-            newX = Math.floor(Math.random()*(((areanSize-cellSize)/cellSize)*cellSize));
-            newY = Math.floor(Math.random()*(((areanSize-cellSize)/cellSize)*cellSize));
+            newX = Math.floor(Math.random()*((areanSize-cellSize)/cellSize))*cellSize;
+            newY = Math.floor(Math.random()*((areanSize-cellSize)/cellSize))*cellSize;
         } while (snake.some(snakeCell=>snakeCell.x===newX && snakeCell.y===newY));
 
         food={x:newX,y:newY};
@@ -86,6 +86,11 @@ document.addEventListener('DOMContentLoaded',()=>{
             if(!gameStarted)return;
             if(isGameOver()){
                 gameStarted=false;
+
+                const over = drawDiv(200,200,'game-finish');
+                over.textContent='GAME-OVER'
+                gameArena.appendChild(over);
+
                 const restart = document.createElement('button');
                 restart.textContent='Restart';
                 restart.id='restart';
@@ -100,13 +105,46 @@ document.addEventListener('DOMContentLoaded',()=>{
             updateSnake();
             drawScoreBoard();
             drawFoodAndSnake();
-        }, 200);
+        }, 100);
+    }
+
+    function changeDirection(e){
+        const lk=37;
+        const uk=38;
+        const rk=39;
+        const dk=40;
+
+        const keyPressed = e.keyCode;
+
+        const isup= dy==-cellSize;
+        const isdn = dy==cellSize;
+        const islt = dx==-cellSize;
+        const isrt = dx==cellSize;
+
+        if(keyPressed == lk && !isrt){
+            dx=-cellSize;
+            dy=0;
+        }
+        if(keyPressed == uk && !isdn){
+            dx=0;
+            dy=-cellSize;
+        }
+        if(keyPressed == rk && !islt){
+            dx=cellSize;
+            dy=0;
+        }
+        if(keyPressed == dk && !isup){
+            dx=0;
+            dy=cellSize;
+        }
     }
 
     function runGame(){
-        gameStarted=true;
-
-        gameLoop();
+        if(!gameStarted){
+            gameStarted=true;
+            gameLoop();
+            document.addEventListener('keydown',changeDirection);
+        }
     }
 
     function initiateGame(){
