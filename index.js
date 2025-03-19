@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let snake = [{x:280,y:200},{x:260,y:200},{x:240,y:200}];
     let dx=cellSize;
     let dy=0;
+    let gameSpeed =100;
     let snakeColor = ['#008000','#198c19','#329932','#4ca64c','#66b266','#4ca64c','#329932','#198c19','#008000' ];
 
     function drawScoreBoard(){
@@ -55,6 +56,10 @@ document.addEventListener('DOMContentLoaded',()=>{
         if(food.x==newHead.x && food.y==newHead.y){
             //increase score
             score+=5;
+            if(gameSpeed>30){
+                gameSpeed-=10;
+                console.log(gameSpeed);
+            }
             moveFood();
             //no need to pop tail
         }else{
@@ -105,7 +110,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             updateSnake();
             drawScoreBoard();
             drawFoodAndSnake();
-        }, 100);
+        }, gameSpeed);
     }
 
     function changeDirection(e){
